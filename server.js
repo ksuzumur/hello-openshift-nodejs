@@ -1,10 +1,10 @@
 var http = require('http');
+var os = require('os');
+var requestCount = 0;
+var handler = function(request, response) {
+  response.writeHead(200);
+  response.end("This is running in pod " + os.hostname() + "\n");
+}
 
-var port = process.env.PORT || 8080;
-
-http.createServer(function (request, response) {
-  response.writeHead(200, {"Content-Type": "text/plain"});
-  response.end("Hello from OpenShift\n");
-}).listen(port);
-
-console.log("Server running on port " + port);
+var www = http.createServer(handler);
+www.listen(8080);
